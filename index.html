@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>DetailOps</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0a0a0a;
+    --card: #141414;
+    --card-hover: #1c1c1c;
+    --border: rgba(255,255,255,0.07);
+    --border-hover: rgba(255,255,255,0.15);
+    --blue: #2563ff;
+    --blue-bright: #4d80ff;
+    --white: #ffffff;
+    --off-white: #ececec;
+    --muted: #606060;
+    --pill: #161616;
+  }
+
+  html, body {
+    min-height: 100vh;
+    background: var(--bg);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    display: flex;
+    justify-content: center;
+    overflow-x: hidden;
+  }
+
+  .page {
+    width: 100%;
+    max-width: 420px;
+    padding: 0 16px 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    width: 100%;
+    position: relative;
+    animation: fadeIn 0.6s ease both;
+  }
+
+  .logo-portrait {
+    width: 100%;
+    height: 290px;
+    background: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0 0 36px 36px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .logo-glow {
+    position: absolute;
+    width: 280px;
+    height: 280px;
+    background: radial-gradient(circle, rgba(37,99,255,0.12) 0%, transparent 65%);
+    border-radius: 50%;
+  }
+
+  .do-logo {
+    position: relative;
+    z-index: 1;
+    width: 148px;
+    height: 148px;
+    filter: drop-shadow(0 0 28px rgba(37,99,255,0.25));
+  }
+
+  .hero-fade {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 70px;
+    background: linear-gradient(to bottom, transparent, var(--bg));
+  }
+
+  /* ── IDENTITY ── */
+  .identity {
+    text-align: center;
+    padding: 18px 0 20px;
+    animation: fadeUp 0.5s 0.1s ease both;
+  }
+
+  .brand {
+    font-size: 21px;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+    margin-bottom: 4px;
+  }
+
+  .handle {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+
+  .bio {
+    font-size: 14px;
+    color: #999;
+    font-weight: 300;
+    line-height: 1.55;
+    max-width: 290px;
+    margin: 0 auto;
+  }
+
+  /* ── SOCIAL ROW ── */
+  .socials {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 26px;
+    animation: fadeUp 0.5s 0.17s ease both;
+  }
+
+  .soc {
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    background: var(--card);
+    border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    text-decoration: none;
+    color: var(--off-white);
+    transition: background 0.2s, border-color 0.2s, transform 0.2s;
+  }
+
+  .soc:hover { background: var(--card-hover); border-color: var(--border-hover); transform: scale(1.1); }
+
+  /* ── PILLS ── */
+  .links {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 26px;
+  }
+
+  .pill {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 56px;
+    padding: 0 16px;
+    background: var(--pill);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    text-decoration: none;
+    color: var(--white);
+    font-size: 14px;
+    font-weight: 500;
+    transition: background 0.2s, border-color 0.2s, transform 0.18s;
+    animation: fadeUp 0.5s ease both;
+  }
+
+  .pill:hover { background: var(--card-hover); border-color: var(--border-hover); transform: scale(1.012); }
+
+  .pill.featured {
+    background: var(--blue);
+    border-color: transparent;
+    font-weight: 600;
+  }
+
+  .pill.featured:hover { background: var(--blue-bright); }
+
+  .p-icon {
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.08);
+    display: flex; align-items: center; justify-content: center;
+    margin-right: 12px;
+    flex-shrink: 0;
+    font-size: 15px;
+  }
+
+  .pill.featured .p-icon { background: rgba(255,255,255,0.18); }
+
+  .p-label { flex: 1; text-align: center; margin-right: 34px; }
+
+  .pill:nth-child(1) { animation-delay: 0.20s; }
+  .pill:nth-child(2) { animation-delay: 0.27s; }
+  .pill:nth-child(3) { animation-delay: 0.34s; }
+  .pill:nth-child(4) { animation-delay: 0.41s; }
+  .pill:nth-child(5) { animation-delay: 0.48s; }
+
+  /* ── EMAIL ── */
+  .email-card {
+    width: 100%;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 28px;
+    padding: 22px 18px;
+    margin-bottom: 30px;
+    animation: fadeUp 0.5s 0.54s ease both;
+  }
+
+  .ec-title { font-size: 16px; font-weight: 600; margin-bottom: 4px; }
+
+  .ec-sub {
+    font-size: 13px;
+    color: var(--muted);
+    font-weight: 300;
+    margin-bottom: 14px;
+    line-height: 1.5;
+  }
+
+  .e-input {
+    width: 100%;
+    padding: 12px 16px;
+    background: #0d0d0d;
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    outline: none;
+    margin-bottom: 8px;
+    transition: border-color 0.2s;
+  }
+
+  .e-input::placeholder { color: var(--muted); }
+  .e-input:focus { border-color: rgba(37,99,255,0.45); }
+
+  .e-btn {
+    width: 100%;
+    padding: 13px;
+    background: var(--white);
+    color: #000;
+    border: none;
+    border-radius: 100px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+  }
+
+  .e-btn:hover { background: var(--off-white); transform: scale(1.01); }
+  .e-btn:disabled { background: #2a2a2a; color: #555; cursor: not-allowed; transform: none; }
+
+  .e-status {
+    font-size: 12px; text-align: center;
+    color: var(--blue-bright); margin-top: 8px;
+    display: none; font-weight: 500;
+  }
+
+  .e-status.on { display: block; }
+  .e-status.err { color: #ff6b6b; }
+
+  /* ── FOOTER ── */
+  .footer {
+    font-size: 12px; color: #2e2e2e;
+    animation: fadeUp 0.5s 0.62s ease both;
+  }
+
+  /* ── MODAL ── */
+  .overlay {
+    display: none; position: fixed; inset: 0;
+    background: rgba(0,0,0,0.82);
+    z-index: 200;
+    align-items: flex-end; justify-content: center;
+    padding: 0 16px 24px;
+    backdrop-filter: blur(10px);
+  }
+
+  .overlay.open { display: flex; }
+
+  .modal {
+    background: #1b1b1b;
+    border: 1px solid var(--border-hover);
+    border-radius: 28px;
+    padding: 32px 22px;
+    width: 100%; max-width: 420px;
+    text-align: center;
+    animation: slideUp 0.3s ease both;
+  }
+
+  .m-emoji { font-size: 34px; margin-bottom: 12px; }
+  .m-title { font-size: 20px; font-weight: 600; margin-bottom: 8px; }
+  .m-text { font-size: 14px; color: var(--muted); line-height: 1.6; margin-bottom: 22px; }
+
+  .m-btn {
+    width: 100%; padding: 14px;
+    background: var(--white); color: #000;
+    border: none; border-radius: 100px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600; font-size: 14px;
+    cursor: pointer; transition: background 0.2s;
+  }
+
+  .m-btn:hover { background: var(--off-white); }
+
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes slideUp { from { opacity: 0; transform: translateY(36px); } to { opacity: 1; transform: translateY(0); } }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HERO: DO Logo Portrait -->
+  <div class="hero">
+    <div class="logo-portrait">
+      <div class="logo-glow"></div>
+      <svg class="do-logo" viewBox="0 0 200 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Left structural rail -->
+        <rect x="18" y="34" width="7" height="112" fill="white"/>
+        <rect x="10" y="34" width="6" height="8" fill="white"/>
+        <rect x="10" y="138" width="6" height="8" fill="white"/>
+        <rect x="10" y="74" width="6" height="7" fill="white"/>
+        <rect x="10" y="99" width="6" height="7" fill="white"/>
+
+        <!-- D shape — outer ring -->
+        <path d="M25 34 L56 34 C96 34 122 58 122 90 C122 122 96 146 56 146 L25 146 Z"
+              stroke="white" stroke-width="5.5" fill="none"/>
+        <!-- D shape — mid ring -->
+        <path d="M32 46 L58 46 C88 46 108 64 108 90 C108 116 88 134 58 134 L32 134 Z"
+              stroke="white" stroke-width="4.5" fill="none"/>
+        <!-- D shape — inner ring -->
+        <path d="M40 60 L60 60 C80 60 94 72 94 90 C94 108 80 120 60 120 L40 120 Z"
+              stroke="white" stroke-width="4" fill="none"/>
+
+        <!-- D horizontal connectors -->
+        <line x1="25" y1="50" x2="40" y2="50" stroke="white" stroke-width="3.5"/>
+        <line x1="25" y1="130" x2="40" y2="130" stroke="white" stroke-width="3.5"/>
+
+        <!-- O shape — outer ring -->
+        <circle cx="158" cy="90" r="40" stroke="white" stroke-width="5.5" fill="none"/>
+        <!-- O shape — mid ring -->
+        <circle cx="158" cy="90" r="28" stroke="white" stroke-width="4.5" fill="none"/>
+        <!-- O shape — inner ring -->
+        <circle cx="158" cy="90" r="16" stroke="white" stroke-width="4" fill="none"/>
+
+        <!-- O structural cuts (matching logo's interrupted arcs) -->
+        <rect x="120" y="83" width="14" height="14" fill="#000"/>
+        <rect x="184" y="83" width="14" height="14" fill="#000"/>
+        <rect x="149" y="48" width="18" height="12" fill="#000"/>
+        <rect x="149" y="120" width="18" height="12" fill="#000"/>
+
+        <!-- Blue diamond accent (top-right, matching the logo) -->
+        <rect x="188" y="26" width="11" height="11" fill="#2563ff" transform="rotate(45 193.5 31.5)"/>
+      </svg>
+    </div>
+    <div class="hero-fade"></div>
+  </div>
+
+  <!-- IDENTITY -->
+  <div class="identity">
+    <div class="brand">DetailOps</div>
+    <div class="handle">@detailops</div>
+    <div class="bio">Pricing & operations systems for mobile detailing operators. Stop guessing. Start profiting.</div>
+  </div>
+
+  <!-- SOCIALS -->
+  <div class="socials">
+    <a class="soc" href="#" target="_blank">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg>
+    </a>
+    <a class="soc" href="#" target="_blank">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.95C5.12 20 12 20 12 20s6.88 0 8.59-.47a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="currentColor" stroke="none"/></svg>
+    </a>
+    <a class="soc" href="#" target="_blank">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.75a8.19 8.19 0 0 0 4.79 1.52V6.82a4.85 4.85 0 0 1-1.02-.13z"/></svg>
+    </a>
+    <a class="soc" href="#" target="_blank">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.122 1.531 5.855L.057 23.738a.5.5 0 0 0 .612.612l5.884-1.474A11.944 11.944 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22a9.944 9.944 0 0 1-5.168-1.443l-.37-.22-3.49.874.889-3.489-.241-.381A9.944 9.944 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+    </a>
+  </div>
+
+  <!-- PILLS -->
+  <div class="links">
+
+    <a class="pill featured" href="https://payhip.com/b/rxk7U" target="_blank">
+      <span class="p-icon">📄</span>
+      <span class="p-label">Operator Pricing System — $39</span>
+    </a>
+
+    <a class="pill" href="https://mcd-calculator.netlify.app" target="_blank">
+      <span class="p-icon">🧮</span>
+      <span class="p-label">Free Profit Calculator</span>
+    </a>
+
+    <a class="pill" href="#" target="_blank">
+      <span class="p-icon">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.95C5.12 20 12 20 12 20s6.88 0 8.59-.47a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="currentColor" stroke="none"/></svg>
+      </span>
+      <span class="p-label">YouTube — Free Training</span>
+    </a>
+
+    <a class="pill" href="#" target="_blank">
+      <span class="p-icon">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg>
+      </span>
+      <span class="p-label">Instagram</span>
+    </a>
+
+    <a class="pill" href="#" target="_blank">
+      <span class="p-icon">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.75a8.19 8.19 0 0 0 4.79 1.52V6.82a4.85 4.85 0 0 1-1.02-.13z"/></svg>
+      </span>
+      <span class="p-label">TikTok</span>
+    </a>
+
+  </div>
+
+  <!-- EMAIL -->
+  <div class="email-card">
+    <div class="ec-title">Get the free Ops Playbook 📋</div>
+    <div class="ec-sub">Pricing strategies & systems for detailing operators. Weekly. No spam.</div>
+    <input class="e-input" type="text" id="nameInput" placeholder="First name" />
+    <input class="e-input" type="email" id="emailInput" placeholder="Email address" />
+    <button class="e-btn" id="subBtn" onclick="handleSub()">Join the List</button>
+    <div class="e-status" id="eStatus"></div>
+  </div>
+
+  <div class="footer">DetailOps · Built for operators</div>
+
+</div>
+
+<!-- MODAL -->
+<div class="overlay" id="modal">
+  <div class="modal">
+    <div class="m-emoji">✅</div>
+    <div class="m-title">You're in!</div>
+    <div class="m-text">Welcome to the list. The Ops Playbook is on its way to your inbox.</div>
+    <button class="m-btn" onclick="closeModal()">Done</button>
+  </div>
+</div>
+
+<script>
+  const BREVO_API_KEY = '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';
+  const BREVO_LIST_ID = 2;
+
+  async function handleSub() {
+    const name = document.getElementById('nameInput').value.trim();
+    const email = document.getElementById('emailInput').value.trim();
+    const btn = document.getElementById('subBtn');
+
+    if (!email || !email.includes('@')) {
+      setStatus('Please enter a valid email.', true); return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = 'Adding you...';
+
+    try {
+      const res = await fetch('https://api.brevo.com/v3/contacts', {
+        method: 'POST',
+        headers: { 'accept': 'application/json', 'content-type': 'application/json', 'api-key': BREVO_API_KEY },
+        body: JSON.stringify({ email, attributes: { FIRSTNAME: name }, listIds: [BREVO_LIST_ID], updateEnabled: true })
+      });
+
+      if (res.ok || res.status === 204) {
+        document.getElementById('nameInput').value = '';
+        document.getElementById('emailInput').value = '';
+        document.getElementById('modal').classList.add('open');
+      } else {
+        const e = await res.json();
+        setStatus(e.message || 'Something went wrong.', true);
+      }
+    } catch { setStatus('Connection error. Try again.', true); }
+    finally { btn.disabled = false; btn.textContent = 'Join the List'; }
+  }
+
+  function setStatus(msg, err) {
+    const el = document.getElementById('eStatus');
+    el.textContent = msg;
+    el.className = 'e-status on' + (err ? ' err' : '');
+  }
+
+  function closeModal() { document.getElementById('modal').classList.remove('open'); }
+
+  document.getElementById('modal').addEventListener('click', e => { if (e.target === document.getElementById('modal')) closeModal(); });
+  document.getElementById('emailInput').addEventListener('keydown', e => { if (e.key === 'Enter') handleSub(); });
+</script>
+</body>
+</html>
